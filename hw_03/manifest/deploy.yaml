@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms1-deploy
+  labels:
+    app: ms1
+    owner: artem_voropay
+    description: otus_hw3
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: ms1
+  template:
+    metadata:
+      labels:
+        app: ms1
+        owner: artem_voropay
+        description: otus_hw3
+    spec:
+      containers:
+        - name: ms1
+          image: artvoropay/otus_microservice:0.1
+          ports:
+            - containerPort: 8000
