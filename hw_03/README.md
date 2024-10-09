@@ -76,6 +76,18 @@ spec:
           image: artvoropay/otus_microservice:0.1
           ports:
             - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 3
 ```
 ### Результат применения манифеста
 ![ms_podes](./img/ms_podes.png)
