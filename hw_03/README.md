@@ -127,20 +127,27 @@ metadata:
     name: ms1-ingress
     namespace: default
     annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
     - host: arch.homework
       http:
         paths:
-          - path: /
+          - path: /(|$)(.*)
             pathType: Prefix
             backend:
               service:
                 name: ms1-svc
                 port:
                   number: 80
+          - path: /otusapp/(.*/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: ms1-svc
+                port: 
+                  number: 80  
 ```
 ### Результат применения манифеста
 ![ingress](./img/ingress.png)
@@ -210,12 +217,18 @@ spec:
 
 ## Проверка работоспособности
 
-На тестовой клиентской машине внесём запись в /etc/hosts
+**На тестовой клиентской машине внесём запись в /etc/hosts**
 
 `192.168.101.10 arch.homework`
 
-Проверяем доступность по имени
+**Проверяем доступность по имени**
 
 ![test_root](./img/test_root.png)
 
 ![test_health](./img/test_health.png)
+
+**Проверка перенаправления**
+
+http://arch.homework/otusapp/avoropay/health
+
+![redirect](./img/redirect.png)

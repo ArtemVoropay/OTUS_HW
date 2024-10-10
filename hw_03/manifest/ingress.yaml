@@ -4,18 +4,24 @@ metadata:
     name: ms1-ingress
     namespace: default
     annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
     - host: arch.homework
       http:
         paths:
-          - path: /
+          - path: /(|$)(.*)
             pathType: Prefix
             backend:
               service:
                 name: ms1-svc
                 port:
                   number: 80
-            
+          - path: /otusapp/(.*/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: ms1-svc
+                port: 
+                  number: 80  
