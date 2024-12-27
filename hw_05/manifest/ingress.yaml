@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: ms-users-ingress
+    namespace: default
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /(|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-users-svc
+                port:
+                  number: 80
+          - path: /otusapp/(.*/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-users-svc
+                port: 
+                  number: 80  
