@@ -26,69 +26,55 @@
 
 
 
+## Устанавливаем prometheus-stack
 
----
-## Команда создания PV
-```kubectl apply -f ./postgres/templates/postgres-pv.yaml```
-
----
-
-## Манифест создания Persistent Volume для БД
-```apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: postgresdb-pv
-  labels:
-    type: local
-spec:
-  # storageClassName: manual
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/pgdata"
+```
+  helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+  helm repo update
+  helm install prometheus prometheus-community/kube-prometheus-stack  -f prometheus-values.yaml -n monitoring
 ```
 
-## Манифест secret.yaml
-```apiVersion: v1
-kind: Secret
-metadata:
-  name: users-secret
-type: Opaque
-data:
-  dbhost: MTAuMTAwLjEwLjc=
-  dbport: NTQzMg==
-  dbuser: cG9zdGdyZXM=
-  dbpass: cG9zdGdyZXM=
-  dbname: dXNlcnM=
+## Устанавливаем Ingress Nginx с включенным сбором метрик
+
+```
+  helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace \
+  --set controller.metrics.enabled=true \
+  --set controller.metrics.serviceMonitor.enabled=true \
+  --set controller.metrics.serviceMonitor.additionalLabels.release="prometheus"
 ```
 
 ---
+### Проверим установку
+![newman](./img/prometheus-pods.png)
 
-## Команда установки через k8s
-```kubectl apply -f ./manifest/```
+---
+### Для доступности Prometheus и Grafana снаружи кластера: 
+1. Применим манифесты Service и Ingress 
+из дирректории prometheus. 
+2. В hosts добавим 2 узла
+  - prometheus.homework
+  - grafana.homework
+
+Чтобы узнать пароль на Grafana смотрим Secret
+
+![newman](./img/grafana-pass.png)
+
+
+
+### Проверим доступность
+![newman](./img/prometheus.png)
+
+
+![newman](./img/grafana.png)
+
 
 ---
 
-## Команда установки PostgreSQL через Helm
-```helm install pg postgres```
 
-## Команда установки приложения через Helm
-```helm install users  usersChart```
+## JSON дашборда находится в файле: [./grafana/dashboard.json](./grafana/dashboard.json)
+---
 
-
-### Проверка установки через Helm
-![newman](./img/helm_list.png)
-
-### Проверка сущностей k8s
-![newman](./img/k8s_items.png)
-
-### Проверка доступности по имени
-
-![newman](./img/arch.homework.png)
-
-### Коллекция Postman находится в файле users.postman_collection.json
-### Тест коллекции Postman в Newman
-
-![newman](./img/newman.png)
+### Состояние системы в момент нагрузки
+![newman](./img/dashboard.png)

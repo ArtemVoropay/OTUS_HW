@@ -8,17 +8,17 @@ from databases import Database
 from api.models import UserSchema
 
 
-PG_SERVER = '10.100.10.7'
-PG_PORT = '5432'
-PG_DB = 'users'
-PG_USER = 'postgres'
-PG_PASSWORD = 'postgres'
+# PG_SERVER = '10.100.10.7'
+# PG_PORT = '5432'
+# PG_DB = 'users'
+# PG_USER = 'postgres'
+# PG_PASSWORD = 'postgres'
 
-# PG_SERVER = os.getenv("PG_SERVER")
-# PG_PORT = os.getenv("PG_PORT")
-# PG_DB = os.getenv("PG_DB")
-# PG_USER = os.getenv("PG_USER")
-# PG_PASSWORD = os.getenv("PG_PASSWORD")
+PG_SERVER = os.getenv("PG_SERVER")
+PG_PORT = os.getenv("PG_PORT")
+PG_DB = os.getenv("PG_DB")
+PG_USER = os.getenv("PG_USER")
+PG_PASSWORD = os.getenv("PG_PASSWORD")
 
 DATABASE_URL = f"postgresql+psycopg2://{PG_USER}:{PG_PASSWORD}@{PG_SERVER}:{PG_PORT}/{PG_DB}"
 
