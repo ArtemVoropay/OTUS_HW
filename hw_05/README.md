@@ -52,7 +52,7 @@
 ---
 ### Для доступности Prometheus и Grafana снаружи кластера: 
 1. Применим манифесты Service и Ingress 
-из дирректории prometheus. 
+из директории prometheus. 
 2. В hosts добавим 2 узла
   - prometheus.homework
   - grafana.homework

@@ -6,7 +6,7 @@ metadata:
   labels:
     app: ms-users
     owner: artem_voropay
-    description: otus_hw4
+    description: otus_hw5
 spec:
   replicas: 2
   strategy:

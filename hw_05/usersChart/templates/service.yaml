@@ -12,7 +12,10 @@ spec:
     app: {{ .Release.Name }}
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    {{- range .Values.service.ports }}
+    - name: {{ .name }}
+      port: {{ .port }}
       protocol: TCP
-      targetPort: {{ .Values.service.targetPort }}
+      targetPort: {{ .targetPort }}
+    {{- end}}
     
