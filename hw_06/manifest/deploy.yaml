@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-users-deploy
+  namespace: default
+  labels:
+    app: ms-users
+    owner: artem_voropay
+    description: otus_hw4
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: ms-users
+  template:
+    metadata:
+      labels:
+        app: ms-users
+        owner: artem_voropay
+        description: otus_hw3
+    spec:
+      containers:
+        - name: ms-users
+          image: artvoropay/otus_users_ms:0.1
+          env:
+            - name: PG_SERVER 
+              valueFrom:
+                secretKeyRef:
+                    name: users-secret
+                    key: dbhost
+            
+            - name: PG_PORT 
+              valueFrom:
+                secretKeyRef:
+                    name: users-secret
+                    key: dbport 
+            
+            - name: PG_USER 
+              valueFrom:
+                secretKeyRef:
+                    name: users-secret
+                    key: dbuser
+            
+            - name: PG_PASSWORD 
+              valueFrom:
+                secretKeyRef:
+                    name: users-secret
+                    key: dbpass
+            
+            - name: PG_DB 
+              valueFrom:
+                secretKeyRef:
+                    name: users-secret
+                    key: dbname
+          ports:
+            - containerPort: 8000
+          
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 3

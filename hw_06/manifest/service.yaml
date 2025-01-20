@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-users-svc
+  namespace: default
+  labels:
+    app: ms-users
+    owner: artem_voropay
+    description: otus_hw4
+spec:
+  selector:
+    app: ms-users
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8000

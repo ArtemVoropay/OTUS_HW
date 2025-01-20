@@ -1,0 +1,389 @@
+{
+	"info": {
+		"_postman_id": "48270106-53f8-415f-bb96-2119b0fa704e",
+		"name": "OTUS - 6th homework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17520505"
+	},
+	"item": [
+		{
+			"name": "register1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"login\", pm.variables.replaceIn('{{$randomUserName}}'))\r",
+							"pm.collectionVariables.set(\"firstname\", pm.variables.replaceIn('{{$randomFirstName}}'))\r",
+							"pm.collectionVariables.set(\"lastname\", pm.variables.replaceIn('{{$randomLastName}}'))\r",
+							"pm.collectionVariables.set(\"password\", pm.variables.replaceIn('{{$randomPassword}}'))\r",
+							"pm.collectionVariables.set(\"email\", pm.variables.replaceIn('{{$randomEmail}}'))\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"{{login}}\",\r\n  \"first_name\": \"{{firstname}}\",\r\n  \"last_name\": \"{{lastname}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BASE_URL}}/register",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_user_unauth",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{BASE_URL}}/users/",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_user_unauth",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"age\", pm.variables.replaceIn('{{$randomInt}}'))\r",
+							"pm.collectionVariables.set(\"phone\", pm.variables.replaceIn('{{$randomPhoneNumber}}'))"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"{{login}}\",\r\n  \"first_name\": \"{{firstname}}\",\r\n  \"last_name\": \"{{lastname}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"age\": {{age}},\r\n  \"phone\": \"{{phone}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BASE_URL}}/users/",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)\r",
+							"pm.collectionVariables.set(\"IDtoken\", responseJSON[\"IDtoken\"])"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"login\": \"{{login}}\", \"password\": \"{{password}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BASE_URL}}/login",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"age\", pm.variables.replaceIn('{{$randomInt}}'))\r",
+							"pm.collectionVariables.set(\"phone\", pm.variables.replaceIn('{{$randomPhoneNumber}}'))\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"{{login}}\",\r\n  \"first_name\": \"{{firstname}}\",\r\n  \"last_name\": \"{{lastname}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"age\": {{age}},\r\n  \"phone\": \"{{phone}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BASE_URL}}/users/",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{BASE_URL}}/users/",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logoff1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{BASE_URL}}/logoff",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"logoff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"login\", pm.variables.replaceIn('{{$randomUserName}}'))\r",
+							"pm.collectionVariables.set(\"firstname\", pm.variables.replaceIn('{{$randomFirstName}}'))\r",
+							"pm.collectionVariables.set(\"lastname\", pm.variables.replaceIn('{{$randomLastName}}'))\r",
+							"pm.collectionVariables.set(\"password\", pm.variables.replaceIn('{{$randomPassword}}'))\r",
+							"pm.collectionVariables.set(\"email\", pm.variables.replaceIn('{{$randomEmail}}'))"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"{{login}}\",\r\n  \"first_name\": \"{{firstname}}\",\r\n  \"last_name\": \"{{lastname}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BASE_URL}}/register",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"login\": \"{{login}}\", \"password\": \"{{password}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BASE_URL}}/login",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logoff2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{BASE_URL}}/logoff",
+					"protocol": "http",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"logoff"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "arch.homework",
+			"type": "string"
+		},
+		{
+			"key": "login",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "firstname",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "lastname",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "email",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "age",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "phone",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "IDtoken",
+			"value": ""
+		}
+	]
+}
