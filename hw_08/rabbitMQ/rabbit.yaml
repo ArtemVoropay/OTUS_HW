@@ -1,0 +1,8 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbit-mq
+spec:
+  persistence:
+    # storageClassName: local-path
+    storage: 5Gi
