@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+
+metadata:
+  namespace: default
+  name: notify-metrics
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: notify
+  endpoints:
+  {{- range .Values.serviceMonitor.endpoints }}
+    - port: {{ .port }}
+      path: {{ .path }}
+      interval: {{ .interval }}
+    {{- end}}  
